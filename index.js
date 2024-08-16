@@ -31,10 +31,16 @@ const client = new MongoClient(uri, {
   async function run() {
     try {
 
-        
+    const productsCollection = client.db("ProductsShowcase").collection("Products");
     // Routes
     app.get('/', (req, res) => {      
         res.send(' Products Showcase Server Is Running');
+      });
+
+    //   get all products
+    app.get('/products', async (req, res) => {
+        const products = await productsCollection.find().toArray();
+        res.send(products);
       });
 
       // Send a ping to confirm a successful connection
